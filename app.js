@@ -24,6 +24,7 @@ db.once("open", function() {
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var Costume = require("./models/costume");
+var resourceRouter = require('./routes/resource');
 
 // Seed DB
 async function recreateDB(){
@@ -57,6 +58,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
