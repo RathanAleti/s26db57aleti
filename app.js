@@ -4,8 +4,44 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+console.log("MONGO_CON:", process.env.MONGO_CON);
+const connectionString = process.env.MONGO_CON;
+
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+// Get the default connection
+var db = mongoose.connection;
+
+// Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+db.once("open", function() {
+    console.log("Connection to DB succeeded");
+});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var Costume = require("./models/costume");
+
+// Seed DB
+async function recreateDB(){
+  await Costume.deleteMany();
+
+  let instance1 = new Costume({costume_type:"ghost", size:'large', cost:15.4});
+  let instance2 = new Costume({costume_type:"witch", size:'medium', cost:20});
+  let instance3 = new Costume({costume_type:"zombie", size:'small', cost:10});
+
+  await instance1.save();
+  await instance2.save();
+  await instance3.save();
+
+  console.log("Database seeded");
+}
+
+let reseed = true;
+if (reseed) { recreateDB(); }
 
 var app = express();
 
