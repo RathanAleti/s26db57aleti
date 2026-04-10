@@ -1,4 +1,4 @@
-var Costume = require('../models/costume');
+const Costume = require('../models/costume');
 
 // List of all Costumes
 exports.costume_list = async function(req, res) {
@@ -11,12 +11,20 @@ exports.costume_list = async function(req, res) {
         res.send(`{"error": ${err}}`);
     }
 };
-// for a specific Costume
-exports.costume_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id);
+
+// Get one Costume by ID
+exports.costume_detail = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ message: 'Sorry, that costume was not found.' });
+        }
+        res.json(item);
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong.', error: err.message });
+    }
 };
 
-// Handle Costume create on POST
 // Handle Costume create on POST
 exports.costume_create_post = async function(req, res) {
     console.log(req.body)
@@ -40,9 +48,24 @@ exports.costume_delete = function(req, res) {
 };
 
 // Handle Costume update on PUT
-exports.costume_update_put = function(req, res) {
-    res.send('NOT IMPLEMENTED: Costume update PUT' + req.params.id);
+exports.costume_update_put = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ message: 'Sorry, that costume was not found.' });
+        }
+
+        if (req.body.costume_type !== undefined) item.costume_type = req.body.costume_type;
+        if (req.body.size !== undefined) item.size = req.body.size;
+        if (req.body.cost !== undefined) item.cost = req.body.cost;
+
+        await item.save();
+        res.json(item);
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong.', error: err.message });
+    }
 };
+
 // VIEWS
 // Handle a show all view
 exports.costume_view_all_Page = async function(req, res) {
