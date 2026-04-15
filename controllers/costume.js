@@ -93,3 +93,7 @@ exports.costume_view_detail_Page = async function(req, res) {
         res.render('costumedetail', { item: null });
     }
 };
+// Handle a show create view
+exports.costume_view_create_Page = async function(req, res) {
+    res.render('costumecreate');
+};
