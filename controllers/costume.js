@@ -83,3 +83,13 @@ exports.costume_view_all_Page = async function(req, res) {
         res.send(`{"error": ${err}}`);
     }
 };
+
+// Handle a show detail view
+exports.costume_view_detail_Page = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.query.id);
+        res.render('costumedetail', { item: item });
+    } catch (err) {
+        res.render('costumedetail', { item: null });
+    }
+};

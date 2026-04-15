@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Costume Detail
+  if item
+    p
+      span.attr-label Costume Type:
+      | #{item.costume_type}
+    p
+      span.attr-label Size:
+      | #{item.size}
+    p
+      span.attr-label Cost:
+      | $#{item.cost}
+    a.btn.btn-secondary(href='/costumes') Back to List
+  else
+    p.text-danger No costume found with that ID.
+    a.btn.btn-secondary(href='/costumes') Back to List
