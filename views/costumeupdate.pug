@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 Update Costume
+  if item
+    p
+      span.attr-label ID:
+      | #{item._id}
+    form#updateForm
+      .mb-3
+        label.attr-label(for='costume_type') Costume Type
+        input#costume_type.form-control(type='text', name='costume_type', value=item.costume_type)
+      .mb-3
+        label.attr-label(for='size') Size
+        input#size.form-control(type='text', name='size', value=item.size)
+      .mb-3
+        label.attr-label(for='cost') Cost
+        input#cost.form-control(type='number', name='cost', value=item.cost)
+      button.btn.btn-primary(type='submit') Update
+      a.btn.btn-secondary.ms-2(href='/costumes') Cancel
+
+    script.
+      document.getElementById('updateForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new URLSearchParams(new FormData(this));
+        const response = await fetch('/resource/costumes/#{item._id}', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: formData.toString()
+        });
+        if (response.ok) {
+          alert('Costume updated successfully!');
+        } else {
+          alert('Error updating costume.');
+        }
+      });
+  else
+    p.text-danger No costume found with that ID.
+    a.btn.btn-secondary(href='/costumes') Back to Lists

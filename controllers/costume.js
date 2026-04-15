@@ -97,3 +97,13 @@ exports.costume_view_detail_Page = async function(req, res) {
 exports.costume_view_create_Page = async function(req, res) {
     res.render('costumecreate');
 };
+
+// Handle a show update view
+exports.costume_view_update_Page = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.query.id);
+        res.render('costumeupdate', { item: item });
+    } catch (err) {
+        res.render('costumeupdate', { item: null });
+    }
+};
