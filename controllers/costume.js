@@ -107,3 +107,12 @@ exports.costume_view_update_Page = async function(req, res) {
         res.render('costumeupdate', { item: null });
     }
 };
+// Handle a show delete view
+exports.costume_view_delete_Page = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.query.id);
+        res.render('costumedelete', { item: item });
+    } catch (err) {
+        res.render('costumedelete', { item: null });
+    }
+};

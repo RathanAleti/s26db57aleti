@@ -17,5 +17,6 @@ router.get('/costumes', costume_controller.costume_list);
 router.get('/detail', costume_controller.costume_view_detail_Page);
 router.get('/create', costume_controller.costume_view_create_Page);
 router.get('/update', costume_controller.costume_view_update_Page);
+router.get('/delete', costume_controller.costume_view_delete_Page);
 
 module.exports = router;
