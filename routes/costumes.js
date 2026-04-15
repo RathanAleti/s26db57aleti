@@ -1,20 +1,18 @@
 var express = require('express');
-const costume_controllers = require('../controllers/costume');
 var router = express.Router();
 
-// GET all costumes
-router.get('/', costume_controllers.costume_list);
+// Require controller modules
+var api_controller = require('../controllers/api');
+var costume_controller = require('../controllers/costume');
 
-// POST create a new costume
-router.post('/', costume_controllers.costume_create_post);
+/// API ROUTE ///
+router.get('/', api_controller.api);
 
-// GET one costume by ID
-router.get('/:id', costume_controllers.costume_detail);
-
-// PUT update a costume by ID
-router.put('/:id', costume_controllers.costume_update_put);
-
-// DELETE a costume by ID
-router.delete('/:id', costume_controllers.costume_delete);
+/// COSTUME ROUTES ///
+router.post('/costumes', costume_controller.costume_create_post);
+router.delete('/costumes/:id', costume_controller.costume_delete);
+router.put('/costumes/:id', costume_controller.costume_update_put);
+router.get('/costumes/:id', costume_controller.costume_detail);
+router.get('/costumes', costume_controller.costume_list);
 
 module.exports = router;
