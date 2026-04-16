@@ -37,3 +37,13 @@ block content
   else
     p.text-danger No costume found with that ID.
     a.btn.btn-secondary(href='/costumes') Back to Lists
+exports.costume_view_update_Page = async function(req, res) {
+    try {
+        const item = await Costume.findById(req.query.id);
+        // findById returns null if ID not found — pug handles it
+        res.render('costumeupdate', { item: item });
+    } catch (err) {
+        // fires when ID is completely malformed
+        res.render('costumeupdate', { item: null });
+    }
+};
