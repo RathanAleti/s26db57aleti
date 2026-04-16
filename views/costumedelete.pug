@@ -1,34 +1,25 @@
 extends layout
 
 block content
-  h1 Delete Costume
-  if item
-    p.text-danger Are you sure you want to delete this costume?
-    p
-      span.attr-label Costume Type:
-      | #{item.costume_type}
-    p
-      span.attr-label Size:
-      | #{item.size}
-    p
-      span.attr-label Cost:
-      | $#{item.cost}
-
-    button#deleteBtn.btn.btn-danger Delete
-    a.btn.btn-secondary.ms-2(href='/costumes') Cancel
-
-    script.
-      document.getElementById('deleteBtn').addEventListener('click', async function() {
-        const response = await fetch('/resource/costumes/#{item._id}', {
-          method: 'DELETE'
-        });
-        if (response.ok) {
-          alert('Costume deleted successfully!');
-          window.location.href = '/costumes';
-        } else {
-          alert('Error deleting costume.');
-        }
-      });
-  else
-    p.text-danger No costume found with that ID.
-    a.btn.btn-secondary(href='/costumes') Back to List
+  .container.mt-4
+    .card.shadow-sm
+      .card-header.bg-primary.text-white
+        h2.mb-0 Costume Detail
+      .card-body
+        if item
+          table.table.table-bordered.mt-2
+            tbody
+              tr
+                th.attr-label Costume Type
+                td #{item.costume_type}
+              tr
+                th.attr-label Size
+                td #{item.size}
+              tr
+                th.attr-label Cost
+                td $#{item.cost}
+          .mt-3
+            a.btn.btn-secondary(href='/costumes') Back to List
+        else
+          p.text-danger No costume found with that ID.
+          a.btn.btn-secondary(href='/costumes') Back to List
