@@ -17,7 +17,7 @@ block content
         label.attr-label(for='cost') Cost
         input#cost.form-control(type='number', name='cost', value=item.cost)
       button.btn.btn-primary(type='submit') Update
-      a.btn.btn-secondary.ms-2(href='/costumes') Cancel
+      a.btn.btn-secondary.ms-2(href='/costumes/costumes') Cancel
 
     script.
       document.getElementById('updateForm').addEventListener('submit', async function(e) {
@@ -30,20 +30,11 @@ block content
         });
         if (response.ok) {
           alert('Costume updated successfully!');
+          window.location.href = '/costumes/costumes';
         } else {
           alert('Error updating costume.');
         }
       });
   else
     p.text-danger No costume found with that ID.
-    a.btn.btn-secondary(href='/costumes') Back to Lists
-exports.costume_view_update_Page = async function(req, res) {
-    try {
-        const item = await Costume.findById(req.query.id);
-        // findById returns null if ID not found — pug handles it
-        res.render('costumeupdate', { item: item });
-    } catch (err) {
-        // fires when ID is completely malformed
-        res.render('costumeupdate', { item: null });
-    }
-};
+    a.btn.btn-secondary(href='/costumes/costumes') Back to Lists

@@ -2,6 +2,14 @@ extends layout
 
 block content
   h1= title
-  ul
-    each costume in results
-      li #{costume.costume_type} - Size: #{costume.size} - Cost: $#{costume.cost}
+  div(class="container-fluid")
+    div(class="row m-1")
+      each costume in results
+        - let destination = `dispatch("/costumes/update?id=${costume._id}")`
+        div(class="row-sm-2", class="m-1") #{costume.costume_type} - Size: #{costume.size} - Cost: $#{costume.cost}
+          button.btn(class="btn-primary ml-1", onclick= destination) Update
+
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }
