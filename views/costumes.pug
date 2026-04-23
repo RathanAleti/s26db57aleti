@@ -3,11 +3,17 @@ extends layout
 block content
   h1= title
   div(class="container-fluid")
+    a(href="/costumes/create")
+      button.btn.btn-success.m-2 Add New Costume
     div(class="row m-1")
       each costume in results
-        - let destination = `dispatch("/costumes/update?id=${costume._id}")`
+        - let updateDest = `dispatch("/costumes/update?id=${costume._id}")`
+        - let detailDest = `dispatch("/costumes/detail?id=${costume._id}")`
+        - let deleteDest = `dispatch("/costumes/delete?id=${costume._id}")`
         div(class="row-sm-2", class="m-1") #{costume.costume_type} - Size: #{costume.size} - Cost: $#{costume.cost}
-          button.btn(class="btn-primary ml-1", onclick= destination) Update
+          button.btn(class="btn-primary ml-1", onclick= updateDest) Update
+          button.btn(class="btn-info ml-1", onclick= detailDest) Detail
+          button.btn(class="btn-danger ml-1", onclick= deleteDest) Delete
 
   script.
     function dispatch(path){
